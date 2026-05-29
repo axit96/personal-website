@@ -1,0 +1,28 @@
+<svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(190 140) rotate(45) scale(840 840)">
+      <stop stop-color="#5A8CFF" stop-opacity="0.95"/>
+      <stop offset="0.55" stop-color="#1A2742" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#070A10"/>
+    </radialGradient>
+    <linearGradient id="shine" x1="120" y1="120" x2="680" y2="680" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.28"/>
+      <stop offset="0.35" stop-color="#FFFFFF" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="soft" x="-40" y="-40" width="880" height="880" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="800" rx="120" fill="url(#bg)"/>
+
+  <g opacity="0.9">
+    <path d="M400 440c86.7 0 157-70.3 157-157S486.7 126 400 126s-157 70.3-157 157 70.3 157 157 157Z" fill="#E8EDF7" fill-opacity="0.92"/>
+    <path d="M120 720c34.5-126.8 149.9-220 280-220s245.5 93.2 280 220" fill="#E8EDF7" fill-opacity="0.92"/>
+  </g>
+
+  <path d="M90 170c190-140 460-140 620 0" stroke="url(#shine)" stroke-width="70" stroke-linecap="round" opacity="0.45" filter="url(#soft)"/>
+  <path d="M140 660c160 110 360 110 520 0" stroke="url(#shine)" stroke-width="55" stroke-linecap="round" opacity="0.35" filter="url(#soft)"/>
+</svg>
+

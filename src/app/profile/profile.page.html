@@ -1,0 +1,95 @@
+<section class="hero reveal" style="--d: 0ms">
+  <div class="avatar-wrap" aria-hidden="true">
+    <img class="avatar" src="/profile-placeholder.svg" alt="Profile picture" />
+    <div class="avatar-ring"></div>
+  </div>
+
+  <div class="hero-text">
+    <p class="kicker">Profile</p>
+    <h1 class="title">{{ name }}</h1>
+    <p class="headline">{{ headline }}</p>
+    <p class="summary">{{ summary }}</p>
+
+    <div class="cta-row">
+      <a class="btn primary" href="mailto:{{ contact.email }}">Email</a>
+      <a class="btn" [href]="contact.github" target="_blank" rel="noreferrer">GitHub</a>
+      <a class="btn" [href]="contact.linkedin" target="_blank" rel="noreferrer">LinkedIn</a>
+    </div>
+  </div>
+
+  <div class="card hero-card tilt" role="note" aria-label="Quick highlights">
+    <h2>Quick highlights</h2>
+    <ul>
+      @for (item of highlights; track item) {
+        <li>{{ item }}</li>
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="grid">
+  <div class="card tilt reveal" style="--d: 280ms">
+    <h2>Experience</h2>
+    <ul class="timeline">
+      <li>
+        <div class="tl-title">Role — Company</div>
+        <div class="tl-meta">2025 — Present</div>
+        <div class="tl-desc">One achievement with measurable outcome.</div>
+      </li>
+      <li>
+        <div class="tl-title">Role — Company</div>
+        <div class="tl-meta">2023 — 2025</div>
+        <div class="tl-desc">One outcome or responsibility that’s meaningful.</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card tilt reveal" style="--d: 520ms">
+    <h2>Projects</h2>
+    <div class="projects">
+      @for (p of projects; track p.title) {
+        <a class="project tilt" [href]="p.linkHref" target="_blank" rel="noreferrer">
+          <div class="project-title">{{ p.title }}</div>
+          <div class="project-desc">{{ p.description }}</div>
+          <div class="project-link">{{ p.linkText }} →</div>
+        </a>
+      }
+    </div>
+  </div>
+
+  <div class="card tilt">
+    <h2>About</h2>
+    <p>
+      Add a concise paragraph about your background, what you enjoy building, and the kind of
+      problems you like solving.
+    </p>
+  </div>
+
+  <div class="card tilt">
+    <h2>Skills</h2>
+    <div class="pill-row" aria-label="Skills list">
+      @for (skill of skills; track skill) {
+        <span class="pill">{{ skill }}</span>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="card contact tilt">
+  <h2>Contact</h2>
+  <div class="contact-grid">
+    <div>
+      <div class="contact-label">Email</div>
+      <a [href]="'mailto:' + contact.email">{{ contact.email }}</a>
+    </div>
+    <div>
+      <div class="contact-label">GitHub</div>
+      <a [href]="contact.github" target="_blank" rel="noreferrer">{{ contact.github }}</a>
+    </div>
+    <div>
+      <div class="contact-label">LinkedIn</div>
+      <a [href]="contact.linkedin" target="_blank" rel="noreferrer">{{ contact.linkedin }}</a>
+    </div>
+  </div>
+</section>
+

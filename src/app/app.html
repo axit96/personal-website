@@ -1,0 +1,17 @@
+<header class="site-header">
+  <div class="brand">
+    <a class="brand-link" routerLink="/profile" aria-label="Go to home">
+      {{ title() }}
+    </a>
+  </div>
+
+  <nav class="nav" aria-label="Primary">
+    <a routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+      >Profile</a
+    >
+  </nav>
+</header>
+
+<main class="site-main">
+  <router-outlet />
+</main>

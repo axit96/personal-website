@@ -1,0 +1,52 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+  /* Slate + Blue — professional light theme */
+  --bg0: #f6f8fc;
+  --bg1: #eef2f9;
+  --bg2: #e8eef8;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: rgba(15, 23, 42, 0.1);
+  --border-strong: rgba(15, 23, 42, 0.16);
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --shadow: 0 16px 45px rgba(15, 23, 42, 0.1);
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-soft: rgba(37, 99, 235, 0.1);
+  --accent-border: rgba(37, 99, 235, 0.28);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    'Apple Color Emoji', 'Segoe UI Emoji';
+  color: var(--text);
+  background:
+    radial-gradient(900px 520px at 18% 10%, rgba(37, 99, 235, 0.08) 0%, rgba(37, 99, 235, 0) 62%),
+    radial-gradient(760px 520px at 84% 0%, rgba(37, 99, 235, 0.05) 0%, rgba(37, 99, 235, 0) 58%),
+    linear-gradient(180deg, var(--bg2) 0%, var(--bg1) 34%, var(--bg0) 100%);
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.2);
+  color: var(--text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+}
+
+a:not(.btn):not(.project):not(.brand-link):hover {
+  color: var(--accent);
+}
