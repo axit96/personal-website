@@ -214,10 +214,13 @@
   transform: translateY(8px);
 }
 
-.contact-form-outer{
-  background-color: aqua;
-  padding: 6% 10%;
-  justify-items: center;
+.contact-form-outer {
+  background-color: rgba(240, 240, 240, 0.8); /* Light gray with 80% opacity */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .reveal.is-visible {
