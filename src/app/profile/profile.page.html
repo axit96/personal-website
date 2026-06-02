@@ -12,20 +12,14 @@
         <div class="form-group">
           <label for="firstName">First Name</label>
           <input id="firstName" type="text" formControlName="firstName" placeholder="John" required="true" />
-          @if (f['firstName'].touched && f['firstName'].errors?.['required']) {
-          <span class="error">First name is required</span>
-          }
-          @if (f['firstName'].touched && f['firstName'].errors?.['minlength']) {
-          <span class="error">Minimum 2 characters</span>
-          }
+          <span *ngIf="f['firstName'].touched && f['firstName'].errors?.['required']" class="error">First name is required</span>
+          <span *ngIf="f['firstName'].touched && f['firstName'].errors?.['minlength']" class="error">Minimum 2 characters</span>
         </div>
 
         <div class="form-group">
           <label for="lastName">Last Name</label>
           <input id="lastName" type="text" formControlName="lastName" placeholder="Doe" required="true" />
-          @if (f['lastName'].touched && f['lastName'].errors?.['required']) {
-          <span class="error">Last name is required</span>
-          }
+          <span *ngIf="f['lastName'].touched && f['lastName'].errors?.['required']" class="error">Last name is required</span>
         </div>
       </div>
 
@@ -34,23 +28,15 @@
           <label for="contactNumber">Contact Number</label>
           <input id="contactNumber" type="tel" formControlName="contactNumber" placeholder="9876543210"
             required="false" />
-          @if (f['contactNumber'].touched && f['contactNumber'].errors?.['required']) {
-          <span class="error">Contact number is required</span>
-          }
-          @if (f['contactNumber'].touched && f['contactNumber'].errors?.['pattern']) {
-          <span class="error">Enter valid 10 digit number</span>
-          }
+          <span *ngIf="f['contactNumber'].touched && f['contactNumber'].errors?.['required']" class="error">Contact number is required</span>
+          <span *ngIf="f['contactNumber'].touched && f['contactNumber'].errors?.['pattern']" class="error">Enter valid 10 digit number</span>
         </div>
 
         <div class="form-group">
           <label for="emailId">Email ID</label>
           <input id="emailId" type="email" formControlName="emailId" placeholder="john@example.com" required="true" />
-          @if (f['emailId'].touched && f['emailId'].errors?.['required']) {
-          <span class="error">Email is required</span>
-          }
-          @if (f['emailId'].touched && f['emailId'].errors?.['email']) {
-          <span class="error">Enter a valid email</span>
-          }
+          <span *ngIf="f['emailId'].touched && f['emailId'].errors?.['required']" class="error">Email is required</span>
+          <span *ngIf="f['emailId'].touched && f['emailId'].errors?.['email']" class="error">Enter a valid email</span>
         </div>
       </div>
 
@@ -58,17 +44,13 @@
         <div class="form-group">
           <label for="city">City</label>
           <input id="city" type="text" formControlName="city" placeholder="Bengaluru" required="false" />
-          @if (f['city'].touched && f['city'].errors?.['required']) {
-          <span class="error">City is required</span>
-          }
+          <span *ngIf="f['city'].touched && f['city'].errors?.['required']" class="error">City is required</span>
         </div>
 
         <div class="form-group">
           <label for="state">State</label>
           <input id="state" type="text" formControlName="state" placeholder="Karnataka" required="false" />
-          @if (f['state'].touched && f['state'].errors?.['required']) {
-          <span class="error">State is required</span>
-          }
+          <span *ngIf="f['state'].touched && f['state'].errors?.['required']" class="error">State is required</span>
         </div>
       </div>
 
@@ -76,12 +58,8 @@
         <label for="query">Query Description</label>
         <textarea id="query" rows="5" formControlName="query" placeholder="Describe your query ..."
           required="false"></textarea>
-        @if (f['query'].touched && f['query'].errors?.['required']) {
-        <span class="error">Query description is required</span>
-        }
-        @if (f['query'].touched && f['query'].errors?.['minlength']) {
-        <span class="error">Please write at least 10 characters</span>
-        }
+        <span *ngIf="f['query'].touched && f['query'].errors?.['required']" class="error">Query description is required</span>
+        <span *ngIf="f['query'].touched && f['query'].errors?.['minlength']" class="error">Please write at least 10 characters</span>
       </div>
 
       <div class="form-actions">
