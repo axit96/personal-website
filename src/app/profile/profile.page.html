@@ -1,3 +1,93 @@
+<section class="hero">
+  <div class="avatar-wrap slide-left" aria-hidden="true">
+    <img class="avatar" src="/1.JPG" alt="Profile picture" />
+    <div class="avatar-ring"></div>
+  </div>
+
+  <div class="hero-text">
+    <p class="kicker appear-from-left">Profile</p>
+    <h1 class="title slide-right">{{ name }}</h1>
+    <p class="headline appear-from-left">{{ headline }}</p>
+    <p class="summary appear-from-left">{{ summary }}</p>
+
+    <div class="cta-row appear-from-left">
+      <a class="btn primary" href="mailto:{{ contact.email }}">Email</a>
+      <a class="btn" [href]="contact.github" target="_blank" rel="noreferrer">GitHub</a>
+      <a class="btn" [href]="contact.linkedin" target="_blank" rel="noreferrer">LinkedIn</a>
+    </div>
+
+    <button class="btn btn-more-info" (click)="scrollToExperience()" style="margin-top: 16px;">
+      More Info ↓
+    </button>
+  </div>
+</section>
+
+<section class="grid" #experienceSection id="experienceSection">
+  <div class="card tilt reveal is-visible" style="--d: 280ms">
+    <h2>Experience</h2>
+    <ul class="timeline">
+      @for (exp of experience; track exp.title) {
+      <li>
+        <div class="tl-title">{{ exp.title }} — {{ exp.company }}</div>
+        <div class="tl-meta">{{ exp.startYear }} — {{ exp.endYear }}</div>
+        <div class="tl-desc">{{ exp.description }}</div>
+      </li>
+      }
+    </ul>
+  </div>
+
+  <div class="card tilt reveal is-visible" style="--d: 520ms">
+    <h2>Projects</h2>
+    <div class="projects">
+      @for (p of projects; track p.title) {
+      <a class="project tilt" [href]="p.linkHref" target="_blank" rel="noreferrer">
+        <div class="project-title">{{ p.title }}</div>
+        <div class="project-desc">{{ p.description }}</div>
+      </a>
+      }
+    </div>
+  </div>
+
+  <div class="card tilt reveal is-visible" style="--d: 760ms">
+    <h2>Education</h2>
+    <ul class="timeline">
+      @for (edu of education; track edu.degree) {
+      <li>
+        <div class="tl-title">{{ edu.degree }}</div>
+        <div class="tl-meta">{{ edu.school }} • {{ edu.year }}</div>
+        <div class="tl-desc">{{ edu.field }}</div>
+      </li>
+      }
+    </ul>
+  </div>
+
+  <!-- <div class="card tilt reveal" style="--d: 1000ms">
+    <h2>About</h2>
+    <p>
+      Add a concise paragraph about your background, what you enjoy building, and the kind of
+      problems you like solving.
+    </p>
+  </div> -->
+
+  <!-- <div class="card tilt reveal" style="--d: 1240ms">
+    <h2>Skills</h2>
+    <div class="pill-row" aria-label="Skills list">
+      @for (skill of skills; track skill) {
+        <span class="pill">{{ skill }}</span>
+      }
+    </div>
+  </div> -->
+
+  <!-- <div class="card hero-card tilt appear-from-right" role="note" aria-label="Quick highlights">
+    <h2>Quick highlights</h2>
+    <ul>
+      @for (item of highlights; track item) {
+        <li>{{ item }}</li>
+      }
+    </ul>
+  </div> -->
+</section>
+
 <section class="contact-form-outer reveal is-visible" id="contactFormSection">
   <div class="contact-form-section">
     <div class="contact-form-header">
@@ -12,14 +102,20 @@
         <div class="form-group">
           <label for="firstName">First Name</label>
           <input id="firstName" type="text" formControlName="firstName" placeholder="John" required="true" />
-          <span *ngIf="f['firstName'].touched && f['firstName'].errors?.['required']" class="error">First name is required</span>
-          <span *ngIf="f['firstName'].touched && f['firstName'].errors?.['minlength']" class="error">Minimum 2 characters</span>
+          @if (f['firstName'].touched && f['firstName'].errors?.['required']) {
+          <span class="error">First name is required</span>
+          }
+          @if (f['firstName'].touched && f['firstName'].errors?.['minlength']) {
+          <span class="error">Minimum 2 characters</span>
+          }
         </div>
 
         <div class="form-group">
           <label for="lastName">Last Name</label>
           <input id="lastName" type="text" formControlName="lastName" placeholder="Doe" required="true" />
-          <span *ngIf="f['lastName'].touched && f['lastName'].errors?.['required']" class="error">Last name is required</span>
+          @if (f['lastName'].touched && f['lastName'].errors?.['required']) {
+          <span class="error">Last name is required</span>
+          }
         </div>
       </div>
 
@@ -28,15 +124,23 @@
           <label for="contactNumber">Contact Number</label>
           <input id="contactNumber" type="tel" formControlName="contactNumber" placeholder="9876543210"
             required="false" />
-          <span *ngIf="f['contactNumber'].touched && f['contactNumber'].errors?.['required']" class="error">Contact number is required</span>
-          <span *ngIf="f['contactNumber'].touched && f['contactNumber'].errors?.['pattern']" class="error">Enter valid 10 digit number</span>
+          @if (f['contactNumber'].touched && f['contactNumber'].errors?.['required']) {
+          <span class="error">Contact number is required</span>
+          }
+          @if (f['contactNumber'].touched && f['contactNumber'].errors?.['pattern']) {
+          <span class="error">Enter valid 10 digit number</span>
+          }
         </div>
 
         <div class="form-group">
           <label for="emailId">Email ID</label>
           <input id="emailId" type="email" formControlName="emailId" placeholder="john@example.com" required="true" />
-          <span *ngIf="f['emailId'].touched && f['emailId'].errors?.['required']" class="error">Email is required</span>
-          <span *ngIf="f['emailId'].touched && f['emailId'].errors?.['email']" class="error">Enter a valid email</span>
+          @if (f['emailId'].touched && f['emailId'].errors?.['required']) {
+          <span class="error">Email is required</span>
+          }
+          @if (f['emailId'].touched && f['emailId'].errors?.['email']) {
+          <span class="error">Enter a valid email</span>
+          }
         </div>
       </div>
 
@@ -44,13 +148,17 @@
         <div class="form-group">
           <label for="city">City</label>
           <input id="city" type="text" formControlName="city" placeholder="Bengaluru" required="false" />
-          <span *ngIf="f['city'].touched && f['city'].errors?.['required']" class="error">City is required</span>
+          @if (f['city'].touched && f['city'].errors?.['required']) {
+          <span class="error">City is required</span>
+          }
         </div>
 
         <div class="form-group">
           <label for="state">State</label>
           <input id="state" type="text" formControlName="state" placeholder="Karnataka" required="false" />
-          <span *ngIf="f['state'].touched && f['state'].errors?.['required']" class="error">State is required</span>
+          @if (f['state'].touched && f['state'].errors?.['required']) {
+          <span class="error">State is required</span>
+          }
         </div>
       </div>
 
@@ -58,8 +166,12 @@
         <label for="query">Query Description</label>
         <textarea id="query" rows="5" formControlName="query" placeholder="Describe your query ..."
           required="false"></textarea>
-        <span *ngIf="f['query'].touched && f['query'].errors?.['required']" class="error">Query description is required</span>
-        <span *ngIf="f['query'].touched && f['query'].errors?.['minlength']" class="error">Please write at least 10 characters</span>
+        @if (f['query'].touched && f['query'].errors?.['required']) {
+        <span class="error">Query description is required</span>
+        }
+        @if (f['query'].touched && f['query'].errors?.['minlength']) {
+        <span class="error">Please write at least 10 characters</span>
+        }
       </div>
 
       <div class="form-actions">
@@ -69,5 +181,53 @@
       </div>
 
     </form>
+  </div>
+</section>
+
+<section class="footer-section">
+  <div class="footer-content">
+    <div class="footer-text">
+      <h2>Let's Connect</h2>
+      <p>I'm always interested in hearing about interesting projects and opportunities.</p>
+    </div>
+
+    <div class="social-links">
+      <h3>Find me on</h3>
+      <div class="links-grid">
+        <a [href]="'mailto:' + contact.email" class="social-link">
+          <span class="social-icon">✉️</span>
+          <span>Email</span>
+          <span class="social-url">{{ contact.email }}</span>
+        </a>
+        <a [href]="contact.github" target="_blank" rel="noreferrer" class="social-link">
+          <span class="social-icon">🐙</span>
+          <span>GitHub</span>
+          <span class="social-url">GitHub Profile</span>
+        </a>
+        <a [href]="contact.linkedin" target="_blank" rel="noreferrer" class="social-link">
+          <span class="social-icon">💼</span>
+          <span>LinkedIn</span>
+          <span class="social-url">LinkedIn Profile</span>
+        </a>
+        @if (contact.twitter) {
+        <a [href]="contact.twitter" target="_blank" rel="noreferrer" class="social-link">
+          <span class="social-icon">𝕏</span>
+          <span>Twitter</span>
+          <span class="social-url">@yourhandle</span>
+        </a>
+        }
+        @if (contact.portfolio) {
+        <a [href]="contact.portfolio" target="_blank" rel="noreferrer" class="social-link">
+          <span class="social-icon">🌐</span>
+          <span>Portfolio</span>
+          <span class="social-url">Visit Site</span>
+        </a>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 {{ name }}. All rights reserved.</p>
   </div>
 </section>

@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +8,12 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   styleUrl: './app.scss',
 })
 export class App {
+  constructor(private router: Router) {}
+
+    scrollToContact() {
+      document.getElementById('contactFormSection')?.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
   protected readonly title = signal('Personal Profile');
 }
