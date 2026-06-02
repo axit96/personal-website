@@ -1,13 +1,12 @@
-import { Block } from '@angular/compiler';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common'; // Import CommonModule
 
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile.page.html',
-  styleUrl: './profile.page.scss',
-  imports: [ReactiveFormsModule],
+  styleUrls: ['./profile.page.scss'],
+  imports: [ReactiveFormsModule, CommonModule], // Add CommonModule to the imports array
 })
 export class ProfilePage {
   @ViewChild('experienceSection') experienceSection!: ElementRef;
@@ -102,7 +101,7 @@ export class ProfilePage {
 
   contactForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.contactForm = this.fb.group({
