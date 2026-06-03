@@ -1,18 +1,52 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common'; // Import CommonModule
 
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
-  imports: [ReactiveFormsModule, CommonModule], // Add CommonModule to the imports array
+  imports: [ReactiveFormsModule],
 })
-export class ProfilePage {
-  @ViewChild('experienceSection') experienceSection!: ElementRef;
+export class ProfilePage implements OnInit, OnDestroy {
+  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
 
-  readonly name = 'Your Name';
-  readonly headline = 'Role • Specialty • Location';
+  protected displayText = '';
+  protected animState = 'hidden';
+  protected cycleKey = 0;
+  private readonly words = ['Skills', 'Expertise', 'Abilities'];
+  private wordIndex = 0;
+  private timeouts: any[] = [];
+
+  private tick() {
+    this.cdr.detectChanges();
+  }
+
+  private cycleWord() {
+    this.displayText = this.words[this.wordIndex];
+    this.animState = 'hidden';
+    this.cycleKey++;
+    this.tick();
+
+    this.timeouts.push(setTimeout(() => {
+      this.animState = 'entering';
+      this.tick();
+      this.timeouts.push(setTimeout(() => {
+        this.animState = 'visible';
+        this.tick();
+        this.timeouts.push(setTimeout(() => {
+          this.animState = 'leaving';
+          this.tick();
+          this.timeouts.push(setTimeout(() => {
+            this.wordIndex = (this.wordIndex + 1) % this.words.length;
+            this.cycleWord();
+          }, 400));
+        }, 400));
+      }, 400));
+    }, 100));
+  }
+
+  readonly name = 'Akshit Vaishnav';
+  readonly headline = 'Software Engineer • Agentic AI Learner • Begaluru';
   readonly summary =
     'A short summary about what you do, what you’re good at, and what you’re looking to build next.';
 
@@ -22,7 +56,36 @@ export class ProfilePage {
     'Strength: a core skill or domain',
   ];
 
-  readonly skills = ['Angular', 'TypeScript', 'RxJS', 'HTML/CSS', 'Node.js'];
+  readonly skillCategories = [
+    {
+      name: 'Programming Languages',
+      icon: '💻',
+      skills: ['TypeScript', 'JavaScript', 'HTML/CSS', 'SQL'],
+      color: '#2563eb',
+      bg: 'linear-gradient(145deg, rgba(37,99,235,0.08), rgba(37,99,235,0.02))',
+    },
+    {
+      name: 'Frameworks',
+      icon: '⚙️',
+      skills: ['Angular', 'RxJS', 'Node.js', 'Express'],
+      color: '#7c3aed',
+      bg: 'linear-gradient(145deg, rgba(124,58,237,0.08), rgba(124,58,237,0.02))',
+    },
+    {
+      name: 'Database',
+      icon: '🗄️',
+      skills: ['MySQL', 'MongoDB', 'PostgreSQL'],
+      color: '#059669',
+      bg: 'linear-gradient(145deg, rgba(5,150,105,0.08), rgba(5,150,105,0.02))',
+    },
+    {
+      name: 'Deployment & Monitoring',
+      icon: '🚀',
+      skills: ['Git', 'Docker', 'AWS', 'CI/CD'],
+      color: '#d97706',
+      bg: 'linear-gradient(145deg, rgba(217,119,6,0.08), rgba(217,119,6,0.02))',
+    },
+  ];
 
   readonly experience = [
     {
@@ -36,25 +99,29 @@ export class ProfilePage {
 
   readonly projects = [
     {
+      id: 1,
       title: 'Project One',
       description: 'One line describing the impact and tech stack.',
       linkText: 'View',
       linkHref: '#',
     },
     {
+      id: 2,
       title: 'Project Two',
       description: 'Another line describing what problem it solves.',
       linkText: 'View',
       linkHref: '#',
     },
     {
-      title: 'Project Two',
+      id: 3,
+      title: 'Project Three',
       description: 'Another line describing what problem it solves.',
       linkText: 'View',
       linkHref: '#',
     },
     {
-      title: 'Project Two',
+      id: 4,
+      title: 'Project Four',
       description: 'Another line describing what problem it solves.',
       linkText: 'View',
       linkHref: '#',
@@ -86,22 +153,9 @@ export class ProfilePage {
     email: 'you@example.com',
     github: 'https://github.com/your-handle',
     linkedin: 'https://www.linkedin.com/in/your-handle',
-    twitter: 'https://twitter.com/yourhandle',
-    portfolio: 'https://yourportfolio.com',
+    twitter: 'https://twitter.com/yourhandle'
   };
-
-  scrollToExperience() {
-    setTimeout(() => {
-      this.experienceSection.nativeElement.scrollIntoView({ 
-        behavior: 'smooth',
-        top: '200px'
-      });
-    }, 100);
-  }
-
   contactForm!: FormGroup;
-
-  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.contactForm = this.fb.group({
@@ -113,6 +167,33 @@ export class ProfilePage {
       state:         ['', ],
       query:         ['', [Validators.minLength(10)]]
     });
+    this.cycleWord();
+  }
+
+  ngOnDestroy() {
+    this.timeouts.forEach(t => clearTimeout(t));
+  }
+
+  onMouseMove(e: MouseEvent) {
+    const cards = document.querySelectorAll('.category-card-inner');
+    cards.forEach(card => {
+      const rect = (card as HTMLElement).getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const dx = (x - cx) / cx;
+      const dy = (y - cy) / cy;
+      (card as HTMLElement).style.transform =
+        `perspective(1000px) rotateY(${dx * 3}deg) rotateX(${-dy * 3}deg)`;
+    });
+  }
+
+  onMouseLeave(e: MouseEvent) {
+    const card = (e.currentTarget as HTMLElement).closest('.category-card-inner');
+    if (card) {
+      (card as HTMLElement).style.transform = '';
+    }
   }
 
   get f() {
@@ -125,6 +206,7 @@ export class ProfilePage {
       return;
     }
     console.log('Form Data:', this.contactForm.value);
+    this.contactForm.reset();
     // hook up EmailJS or API call here
   }
 }

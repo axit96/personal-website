@@ -1,19 +1,21 @@
 import { Component, signal } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App {
-  constructor(private router: Router) {}
+  scrollTo(sectionId: string) {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  }
 
-    scrollToContact() {
-      document.getElementById('contactFormSection')?.scrollIntoView({
-        behavior: 'smooth'
-      });
-    }
   protected readonly title = signal('Personal Profile');
+  protected readonly navItems = [
+    { label: 'Experience', id: 'experienceSection' },
+    { label: 'Skills', id: 'skillsSection' },
+    { label: 'Contact Me', id: 'contactFormSection' },
+  ];
 }

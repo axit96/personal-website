@@ -13,7 +13,7 @@
   gap: 16px;
   padding: 14px 18px;
   border-bottom: 1px solid var(--border);
-  background: lightblue;
+  background: var(--surface);
   backdrop-filter: blur(10px);
   opacity: 0.9;
 }
@@ -32,20 +32,27 @@
 
 .nav {
   display: flex;
-  gap: 12px;
+  gap: 8px;
 }
 
-.nav a {
+.nav-btn {
+  all: unset;
+  cursor: pointer;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
   color: var(--muted);
-  text-decoration: none;
-  padding: 8px 10px;
-  border-radius: 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+  font-family: inherit;
 }
 
-.nav a.active,
-.nav a:hover {
+.nav-btn:hover {
   color: var(--accent);
   background: var(--accent-soft);
+  border-color: var(--accent-border);
 }
 
 .site-main {
