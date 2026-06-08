@@ -10,11 +10,11 @@
     <p class="headline appear-from-left">{{ headline }}</p>
     <p class="summary appear-from-left">{{ summary }}</p>
 
-    <div class="cta-row appear-from-left">
-      <a class="btn primary" href="mailto:{{ contact.email }}">Email</a>
-      <a class="btn" [href]="contact.github" target="_blank" rel="noreferrer">GitHub</a>
-      <a class="btn" [href]="contact.linkedin" target="_blank" rel="noreferrer">LinkedIn</a>
-    </div>
+  </div>
+
+  <div class="scroll-indicator" [class.hidden]="!scrollIndicator">
+    <span class="scroll-text">Scroll down for more info</span>
+    <span class="scroll-arrow"></span>
   </div>
 </section>
 
@@ -36,10 +36,10 @@
     <h2>Projects</h2>
     <div class="projects">
       @for (p of projects; track $index) {
-      <a class="project tilt" [href]="p.linkHref" target="_blank" rel="noreferrer">
+      <button class="project tilt" (click)="openProject(p)">
         <div class="project-title">{{ p.title }}</div>
         <div class="project-desc">{{ p.description }}</div>
-      </a>
+      </button>
       }
     </div>
   </div>
@@ -58,10 +58,11 @@
   </div>
 </section>
 
+
 <section class="skills-section reveal is-visible" id="skillsSection">
   <div class="skills-header">
     <p class="kicker">Expertise</p>
-    <h2 class="skills-title">@for (k of [cycleKey]; track k) {<span class="word-reveal" [class.entering]="animState === 'entering'" [class.visible]="animState === 'visible'" [class.leaving]="animState === 'leaving'">{{ displayText }}</span>} &amp; Technologies</h2>
+    <h2 class="skills-title">Skills &amp; Technologies</h2>
     <p class="skills-sub">Categorized by domain — tools I use to build end-to-end solutions</p>
   </div>
   <div class="skills-category-row" (mousemove)="onMouseMove($event)">
@@ -190,15 +191,7 @@
           <span>LinkedIn</span>
           <span class="social-url">LinkedIn Profile</span>
         </a>
-        @if (contact.twitter) {
-        <a [href]="contact.twitter" target="_blank" rel="noreferrer" class="social-link social-twitter">
-          <span class="social-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </span>
-          <span>Twitter</span>
-          <span class="social-url">@yourhandle</span>
-        </a>
-        }
+
       </div>
     </div>
   </div>
@@ -207,3 +200,46 @@
     <p>&copy; 2026 {{ name }}. All rights reserved.</p>
   </div>
 </section>
+
+@if (selectedProject) {
+<div class="modal-overlay" (click)="closeProject()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <button class="modal-close" (click)="closeProject()" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
+    <div class="modal-header">
+      <h2 class="modal-title">{{ selectedProject.title }}</h2>
+      <div class="modal-meta">
+        <span class="modal-role">{{ selectedProject.role }}</span>
+        <span class="modal-duration">{{ selectedProject.duration }}</span>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <p class="modal-description">{{ selectedProject.detailedDescription }}</p>
+
+      <div class="modal-section">
+        <h3>Technologies Used</h3>
+        <div class="tech-tags">
+          @for (tech of selectedProject.technologies; track tech) {
+          <span class="tech-tag">{{ tech }}</span>
+          }
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Key Highlights</h3>
+        <ul class="highlights-list">
+          @for (highlight of selectedProject.highlights; track highlight) {
+          <li class="highlight-item">{{ highlight }}</li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+}

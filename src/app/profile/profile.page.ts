@@ -1,5 +1,16 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  detailedDescription: string;
+  technologies: string[];
+  role: string;
+  duration: string;
+  highlights: string[];
+}
 
 @Component({
   selector: 'app-profile-page',
@@ -8,152 +19,168 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   imports: [ReactiveFormsModule],
 })
 export class ProfilePage implements OnInit, OnDestroy {
-  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
+  protected scrollIndicator = true;
+  protected selectedProject: Project | null = null;
 
-  protected displayText = '';
-  protected animState = 'hidden';
-  protected cycleKey = 0;
-  private readonly words = ['Skills', 'Expertise', 'Abilities'];
-  private wordIndex = 0;
-  private timeouts: any[] = [];
+  constructor(private fb: FormBuilder) {}
 
-  private tick() {
-    this.cdr.detectChanges();
+  protected openProject(project: Project): void {
+    this.selectedProject = project;
+    document.body.style.overflow = 'hidden';
   }
 
-  private cycleWord() {
-    this.displayText = this.words[this.wordIndex];
-    this.animState = 'hidden';
-    this.cycleKey++;
-    this.tick();
+  protected closeProject(): void {
+    this.selectedProject = null;
+    document.body.style.overflow = '';
+  }
 
-    this.timeouts.push(setTimeout(() => {
-      this.animState = 'entering';
-      this.tick();
-      this.timeouts.push(setTimeout(() => {
-        this.animState = 'visible';
-        this.tick();
-        this.timeouts.push(setTimeout(() => {
-          this.animState = 'leaving';
-          this.tick();
-          this.timeouts.push(setTimeout(() => {
-            this.wordIndex = (this.wordIndex + 1) % this.words.length;
-            this.cycleWord();
-          }, 400));
-        }, 400));
-      }, 400));
-    }, 100));
+  @HostListener('document:keydown.Escape')
+  protected onEscape(): void {
+    if (this.selectedProject) {
+      this.closeProject();
+    }
+  }
+
+  @HostListener('window:scroll')
+  protected onScroll(): void {
+    if (this.scrollIndicator) {
+      this.scrollIndicator = false;
+    }
   }
 
   readonly name = 'Akshit Vaishnav';
-  readonly headline = 'Software Engineer • Agentic AI Learner • Begaluru';
-  readonly summary =
-    'A short summary about what you do, what you’re good at, and what you’re looking to build next.';
+  readonly headline = 'Digital Specialist Engineer (Software Engineer 2) | Java FullStack | AI/ML/Gen-AI Enthusiast';
 
-  readonly highlights = [
-    'Currently: what you’re working on',
-    'Previously: a notable company/project',
-    'Strength: a core skill or domain',
-  ];
+  get yearsOfExperience(): string {
+    const start = new Date('2021-10-18');
+    const now = new Date();
+    const totalMonths = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+    return (totalMonths / 12).toFixed(1);
+  }
+
+  get summary(): string {
+    return `Full Stack Java Engineer with ${this.yearsOfExperience}+ years of experience at Infosys, specializing in Core Java, Spring Boot API development, Angular UI integration, and enterprise microservices including Kafka framework.`;
+  }
 
   readonly skillCategories = [
     {
       name: 'Programming Languages',
       icon: '💻',
-      skills: ['TypeScript', 'JavaScript', 'HTML/CSS', 'SQL'],
+      skills: ['Java', 'Python', 'TypeScript', 'HTML5', 'CSS3'],
       color: '#2563eb',
-      bg: 'linear-gradient(145deg, rgba(37,99,235,0.08), rgba(37,99,235,0.02))',
     },
     {
-      name: 'Frameworks',
+      name: 'Frameworks & Libraries',
       icon: '⚙️',
-      skills: ['Angular', 'RxJS', 'Node.js', 'Express'],
+      skills: ['Spring Boot', 'Spring REST/Data JPA', 'Angular', 'TensorFlow', 'Keras'],
       color: '#7c3aed',
-      bg: 'linear-gradient(145deg, rgba(124,58,237,0.08), rgba(124,58,237,0.02))',
     },
     {
-      name: 'Database',
+      name: 'Databases',
       icon: '🗄️',
-      skills: ['MySQL', 'MongoDB', 'PostgreSQL'],
+      skills: ['MySQL', 'MongoDB', 'PostgreSQL', 'Couchbase'],
       color: '#059669',
-      bg: 'linear-gradient(145deg, rgba(5,150,105,0.08), rgba(5,150,105,0.02))',
     },
     {
-      name: 'Deployment & Monitoring',
+      name: 'DevOps & Testing',
       icon: '🚀',
-      skills: ['Git', 'Docker', 'AWS', 'CI/CD'],
+      skills: ['Git', 'Maven & Gradle', 'Jenkins', 'GitHub Actions', 'SonarQube', 'JUnit', 'Karma-Jasmine'],
       color: '#d97706',
-      bg: 'linear-gradient(145deg, rgba(217,119,6,0.08), rgba(217,119,6,0.02))',
     },
   ];
 
   readonly experience = [
     {
-      title: 'Digital Specialist Engineer',
+      title: 'Digital Specialist Engineer (Full Stack Java + Angular + DB)',
       company: 'Infosys Limited',
-      startYear: 'October 2021',
+      startYear: 'Oct 2021',
       endYear: 'Present',
-      description: 'Lead developer of enterprize grader application develpment for various clients',
-    }
-  ]; 
+      description: 'Full Stack Java + Angular + DB development across multiple enterprise projects including mainframe modernization, data localization, and lending services.',
+    },
+  ];
 
-  readonly projects = [
+  readonly projects: Project[] = [
     {
       id: 1,
-      title: 'Project One',
-      description: 'One line describing the impact and tech stack.',
-      linkText: 'View',
-      linkHref: '#',
+      title: 'Mainframe Modernization',
+      description: 'Analyzed COBOL-to-Java Spring Boot code via AWS Blu Age. Developed stub programs with REST Template as REST APIs.',
+      detailedDescription: 'Led the modernization of a legacy mainframe system by analyzing COBOL programs and transforming them into Java Spring Boot microservices using AWS Blu Age. Designed and developed stub programs that simulated mainframe behavior, exposing them as REST APIs for seamless integration with modern frontend applications. Created Liquibase migration scripts to manage database schema changes across environments. Implemented AWS CloudWatch alarms and dashboards for proactive monitoring of application health and performance. Collaborated with cross-functional teams to ensure zero-downtime deployment and data integrity throughout the migration process.',
+      technologies: ['Java', 'Spring Boot', 'AWS Blu Age', 'Liquibase', 'AWS CloudWatch', 'REST APIs', 'COBOL'],
+      role: 'Full Stack Developer',
+      duration: '8 months',
+      highlights: [
+        'Successfully migrated 40+ COBOL programs to Java microservices',
+        'Reduced legacy system maintenance costs by 60%',
+        'Achieved 99.9% uptime during cutover',
+        'Implemented comprehensive monitoring reducing incident response time by 70%',
+      ],
     },
     {
       id: 2,
-      title: 'Project Two',
-      description: 'Another line describing what problem it solves.',
-      linkText: 'View',
-      linkHref: '#',
+      title: 'Client Setup Utility (CSU) Localization',
+      description: 'Localized CSU application for RBI data residency compliance with Kafka-based cross-region replication.',
+      detailedDescription: 'Spearheaded the localization of the Client Setup Utility (CSU) application to comply with RBI data residency regulations requiring all customer data to remain within Indian borders. Architected and implemented a Kafka-based replication pipeline to synchronize data between US and India regions while ensuring complete data isolation. Conducted extensive end-to-end testing using Kibana for log analysis and troubleshooting. Worked closely with the security team to implement encryption at rest and in transit, ensuring compliance with financial data protection standards. Performed load testing to validate system performance under peak transaction volumes.',
+      technologies: ['Kafka', 'Java', 'Spring Boot', 'Kibana', 'Elasticsearch', 'REST APIs', 'Angular'],
+      role: 'Software Engineer',
+      duration: '6 months',
+      highlights: [
+        'Achieved full RBI compliance ahead of regulatory deadline',
+        'Designed Kafka replication handling 10K+ messages/second',
+        'Reduced data synchronization latency from 5 minutes to under 2 seconds',
+        'Zero data loss during cross-region replication',
+      ],
     },
     {
       id: 3,
-      title: 'Project Three',
-      description: 'Another line describing what problem it solves.',
-      linkText: 'View',
-      linkHref: '#',
+      title: 'Correspondent Lending as a Service (CLaaS)',
+      description: 'Designed microservice architectures and Angular components with RESTful APIs and CI/CD deployment.',
+      detailedDescription: 'Played a key role in building a Correspondent Lending as a Service (CLaaS) platform that digitized the entire lending lifecycle. Designed and implemented microservice architectures with Spring Boot, ensuring loose coupling and high scalability. Developed reusable Angular components for the frontend, including dynamic form builders and real-time loan status dashboards. Built comprehensive RESTful APIs with thorough JUnit test coverage exceeding 90%. Integrated AWS S3 for secure document storage and retrieval. Automated deployments using Jenkins pipelines on OpenShift, reducing release cycles from weeks to days.',
+      technologies: ['Java', 'Spring Boot', 'Angular', 'AWS S3', 'Jenkins', 'OpenShift', 'JUnit', 'REST APIs'],
+      role: 'Full Stack Developer',
+      duration: '12 months',
+      highlights: [
+        'Designed 15+ microservices with < 100ms average response time',
+        'Achieved 90%+ code coverage with JUnit and integration tests',
+        'Reduced deployment cycle from 2 weeks to 2 days via CI/CD automation',
+        'Managed 50K+ daily loan transaction processing',
+      ],
     },
     {
       id: 4,
-      title: 'Project Four',
-      description: 'Another line describing what problem it solves.',
-      linkText: 'View',
-      linkHref: '#',
+      title: 'Weather Forecasting using Time Series Dataset',
+      description: 'Designed ML/DL models (ANN, CNN, RNN, LSTM, SVM, Random Forest, KNN) for multi-year weather forecasting.',
+      detailedDescription: 'Designed and implemented multiple machine learning and deep learning models for weather forecasting using a multi-year time series dataset. Developed and compared Artificial Neural Networks (ANN), Convolutional Neural Networks (CNN), Recurrent Neural Networks (RNN), Long Short-Term Memory (LSTM), Support Vector Machines (SVM), Random Forest, and K-Nearest Neighbors models. Applied comprehensive data preprocessing including handling missing values, feature scaling, and temporal feature engineering. Evaluated model performance using Mean Absolute Error (MAE) and Root Mean Square Error (RMSE) metrics. Conducted hyperparameter tuning using grid search and cross-validation to optimize each model architecture.',
+      technologies: ['Python', 'TensorFlow', 'Keras', 'Scikit-learn', 'Pandas', 'NumPy', 'Matplotlib'],
+      role: 'AI/ML Engineer',
+      duration: '4 months',
+      highlights: [
+        'LSTM model achieved lowest RMSE of 2.3% error rate across all models',
+        'Processed and analyzed 10+ years of historical weather data',
+        'Published results showing LSTM outperformed traditional ML by 25%',
+        'Implemented automated data pipeline for real-time forecasting',
+      ],
     },
   ];
 
   readonly education = [
     {
-      degree: 'Master\'s of Technology (M.Tech)',
-      school: 'NIT Goa',
+      degree: 'Master of Technology (M.Tech)',
+      school: 'National Institute of Technology, Goa',
       year: '2019-2021',
       field: 'Computer Science',
     },
     {
-      degree: 'Gate Exam Coaching',
-      school: 'ACE Academy, Hyderabad',
-      year: '2018-2019',
-      field: 'GATE (Graduate Aptitude Test in Engineering)',
-    },
-    {
       degree: 'Bachelor of Engineering (BE)',
-      school: 'Parul Institute of Engineering andTechnology',
+      school: 'Parul Institute of Engineering and Technology',
       year: '2014-2018',
       field: 'Computer Engineering',
-    }
+    },
   ];
 
   readonly contact = {
-    email: 'you@example.com',
-    github: 'https://github.com/your-handle',
-    linkedin: 'https://www.linkedin.com/in/your-handle',
-    twitter: 'https://twitter.com/yourhandle'
+    email: 'akshitvaishnav96@gmail.com',
+    github: 'https://github.com/axit96',
+    linkedin: 'https://www.linkedin.com/in/axit96/',
   };
   contactForm!: FormGroup;
 
@@ -167,11 +194,13 @@ export class ProfilePage implements OnInit, OnDestroy {
       state:         ['', ],
       query:         ['', [Validators.minLength(10)]]
     });
-    this.cycleWord();
+    if (window.scrollY > 0) {
+      this.scrollIndicator = false;
+    }
   }
 
-  ngOnDestroy() {
-    this.timeouts.forEach(t => clearTimeout(t));
+  ngOnDestroy(): void {
+    document.body.style.overflow = '';
   }
 
   onMouseMove(e: MouseEvent) {

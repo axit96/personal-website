@@ -138,11 +138,12 @@
 /* ── hero section ─────────────────────────────────────────────────────────── */
 
 .hero {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 65px;
   place-items: center;
-  min-height: 92vh;
+  min-height: 94vh;
   margin-bottom: 0;
   padding: 40px 20px;
   background-color: #F4F4F4;
@@ -153,7 +154,69 @@
     grid-template-columns: 1fr;
     min-height: 100vh;
     justify-items: stretch;
+    padding: 40px 20px;
+    gap: 40px;
   }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 24px 16px;
+    gap: 32px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .headline {
+    font-size: 14px;
+  }
+
+  .summary {
+    font-size: 13px;
+  }
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.scroll-indicator.hidden {
+  opacity: 0;
+}
+
+.scroll-text {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.scroll-arrow {
+  width: 20px;
+  height: 20px;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg);
+  animation: bounceArrow 2s ease-in-out infinite;
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.6; }
+  50% { transform: rotate(45deg) translateY(6px); opacity: 1; }
 }
 
 .avatar-wrap {
@@ -240,8 +303,7 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
   gap: 16px;
-  padding: 190px 80px;
-  scroll-margin-top: 60px;
+  padding: 120px 80px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
@@ -287,13 +349,19 @@
 .projects        { display: grid; gap: 10px; }
 
 .project {
+  all: unset;
   display: block;
-  text-decoration: none;
+  cursor: pointer;
   color: inherit;
   padding: 12px;
   border-radius: 14px;
   background: var(--surface);
   border: 1px solid var(--border);
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .project:hover   { background: var(--surface-2); }
@@ -345,6 +413,16 @@
   .skills-section {
     padding: 60px 24px 120px;
     min-height: 100vh;
+  }
+
+  .skills-title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .skills-title {
+    font-size: 22px;
   }
 }
 
@@ -440,9 +518,20 @@
   gap: 8px;
 }
 
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
 .category-icon {
   font-size: 36px;
   line-height: 1;
+  display: inline-block;
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+.category-card-inner:hover .category-icon {
+  animation: iconFloat 1s ease-in-out infinite;
 }
 
 .category-name {
@@ -475,10 +564,7 @@
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.category-skill-item:hover {
-  background: color-mix(in srgb, var(--item-color) 20%, transparent);
-  transform: translateX(4px);
-}
+
 
 /* ── contact form section ─────────────────────────────────────────────────── */
 
@@ -498,9 +584,26 @@
 }
 
 @media (max-width: 900px) {
+  .contact-form-outer {
+    padding: 40px 16px;
+  }
+
   .contact-form-section {
-    margin: 40px 16px;
     padding: 32px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form-outer {
+    padding: 24px 12px;
+  }
+
+  .contact-form-section {
+    padding: 24px 16px;
+  }
+
+  .contact-form-header h2 {
+    font-size: 22px;
   }
 }
 
@@ -752,3 +855,160 @@
 }
 
 .footer-bottom p { margin: 0; }
+
+/* ── project modal ──────────────────────────────────────────────────────── */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  animation: overlayFadeIn 0.25s ease;
+  padding: 20px;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 40px 36px 32px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+  animation: modalSlideUp 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(30px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-card::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 3px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: var(--bg2);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--text);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.modal-close:hover {
+  background: var(--border-strong);
+  transform: rotate(90deg);
+}
+
+.modal-header {
+  margin-bottom: 24px;
+}
+
+.modal-title {
+  margin: 0 0 8px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.modal-meta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.modal-role {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.modal-body p {
+  margin: 0 0 16px;
+  line-height: 1.7;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.modal-section {
+  margin-bottom: 20px;
+}
+
+.modal-section h3 {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-tag {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+}
+
+.highlights-list {
+  margin: 0;
+  padding: 0 0 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.highlight-item {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.highlight-item::marker {
+  color: var(--accent);
+}
+
+@media (max-width: 600px) {
+  .modal-card {
+    padding: 28px 20px 24px;
+  }
+
+  .modal-title {
+    font-size: 18px;
+  }
+}
