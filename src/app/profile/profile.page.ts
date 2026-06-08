@@ -133,16 +133,16 @@ export class ProfilePage implements OnInit, OnDestroy {
     {
       id: 3,
       title: 'Correspondent Lending as a Service (CLaaS)',
-      description: 'Designed microservice architectures and Angular components with RESTful APIs and CI/CD deployment.',
-      detailedDescription: 'Played a key role in building a Correspondent Lending as a Service (CLaaS) platform that digitized the entire lending lifecycle. Designed and implemented microservice architectures with Spring Boot, ensuring loose coupling and high scalability. Developed reusable Angular components for the frontend, including dynamic form builders and real-time loan status dashboards. Built comprehensive RESTful APIs with thorough JUnit test coverage exceeding 90%. Integrated AWS S3 for secure document storage and retrieval. Automated deployments using Jenkins pipelines on OpenShift, reducing release cycles from weeks to days.',
+      description: 'Led a 6-member team designing microservice architectures and Angular components with RESTful APIs and CI/CD deployment.',
+      detailedDescription: 'Served as lead developer for a Correspondent Lending as a Service (CLaaS) platform, handling a 6-member team for seamless development, deployment, testing, and bug fixing across the full delivery lifecycle. Designed and implemented microservice architectures with Spring Boot, ensuring loose coupling and high scalability. Developed reusable Angular components for the frontend, including dynamic form builders and real-time loan status dashboards. Built comprehensive RESTful APIs with thorough JUnit test coverage exceeding 90%. Integrated AWS S3 for secure document storage and retrieval. Automated deployments using Jenkins pipelines on OpenShift, reducing release cycles from weeks to days.',
       technologies: ['Java', 'Spring Boot', 'Angular', 'AWS S3', 'Jenkins', 'OpenShift', 'JUnit', 'REST APIs'],
-      role: 'Full Stack Developer',
+      role: 'Lead Developer',
       duration: '12 months',
       highlights: [
-        'Designed 15+ microservices with < 100ms average response time',
-        'Achieved 90%+ code coverage with JUnit and integration tests',
+        'Led a 6-member team through seamless development, deployment, testing, and bug fixing',
+        'Designed and implemented over 15+ screens and 4+ different workflows',
+        'Achieved 90%+ code coverage with JUnit, Karma-Jasmin and integration tests',
         'Reduced deployment cycle from 2 weeks to 2 days via CI/CD automation',
-        'Managed 50K+ daily loan transaction processing',
       ],
     },
     {
