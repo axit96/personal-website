@@ -22,7 +22,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   protected scrollIndicator = true;
   protected selectedProject: Project | null = null;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private readonly fb: FormBuilder) {}
 
   protected openProject(project: Project): void {
     this.selectedProject = project;
