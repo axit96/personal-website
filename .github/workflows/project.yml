@@ -35,24 +35,24 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.TOKEN_GIT }}
 
-  deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: build
-    runs-on: ubuntu-latest
+  # deploy:
+  #   if: github.ref == 'refs/heads/main'
+  #   needs: build
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 22
 
-      - run: npm ci
+  #     - run: npm ci
 
-      - run: npm run build
+  #     - run: npm run build
 
-      - uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACC_ID }}
-          command: wrangler pages deploy dist/personal-website/browser --project-name=personal-website
+  #     - uses: cloudflare/wrangler-action@v3
+  #       with:
+  #         apiToken: ${{ secrets.CLOUDFLARE_TOKEN }}
+  #         accountId: ${{ secrets.CLOUDFLARE_ACC_ID }}
+  #         command: wrangler pages deploy dist/personal-website/browser --project-name=personal-website
