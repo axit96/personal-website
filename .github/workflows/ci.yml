@@ -55,4 +55,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACC_ID }}
-          command: pages deploy dist/personal-website/browser --project-name=personal-website
+          command: wrangler pages deploy dist/personal-website/browser --project-name=personal-website
