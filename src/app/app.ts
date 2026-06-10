@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -12,7 +12,6 @@ export class App {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   }
 
-  protected readonly title = signal('Personal Profile');
   protected readonly navItems = [
     { label: 'Experience', id: 'experienceSection' },
     { label: 'Skills', id: 'skillsSection' },

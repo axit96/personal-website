@@ -1,0 +1,58 @@
+<svg width="100%" viewBox="62 23 164 164" role="img" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @keyframes shadeLoop {
+      0%   { --c1: #2563eb; --c2: #0f172a; --c3: #667eea; }
+      25%  { --c1: #667eea; --c2: #1e293b; --c3: #93c5fd; }
+      50%  { --c1: #764ba2; --c2: #1e1b4b; --c3: #c4b5fd; }
+      75%  { --c1: #4f46e5; --c2: #0f172a; --c3: #818cf8; }
+      100% { --c1: #2563eb; --c2: #0f172a; --c3: #667eea; }
+    }
+    :root {
+      --c1: #2563eb;
+      --c2: #0f172a;
+      --c3: #667eea;
+      animation: shadeLoop 6s ease-in-out infinite;
+    }
+    .ring-stroke { stroke: var(--c1); }
+    .ring-fill   { fill: var(--c1); }
+    .letter-a    { fill: var(--c2); }
+    .letter-v    { fill: var(--c3); }
+  </style>
+  <title>Akshit Vaishnav</title>
+  <g>
+    <!-- Outer ring -->
+    <circle cx="144" cy="105" r="82" fill="none" class="ring-stroke" stroke-width="1.5"/>
+    <!-- Inner ring -->
+    <circle cx="144" cy="105" r="72" fill="none" class="ring-stroke" stroke-width="0.5"/>
+    <!-- Fill circle -->
+    <circle cx="144" cy="105" r="70" class="ring-fill" opacity="0.08"/>
+
+    <!-- Decorative tick marks around ring -->
+    <g class="ring-stroke" stroke-width="1.5" opacity="0.6">
+      <line x1="144" y1="23" x2="144" y2="33"/>
+      <line x1="144" y1="177" x2="144" y2="187"/>
+      <line x1="62" y1="105" x2="72" y2="105"/>
+      <line x1="216" y1="105" x2="226" y2="105"/>
+      <line x1="86" y1="47" x2="91" y2="56"/>
+      <line x1="197" y1="154" x2="202" y2="163"/>
+      <line x1="197" y1="47" x2="192" y2="56"/>
+      <line x1="86" y1="154" x2="91" y2="145"/>
+    </g>
+
+    <!-- The A — thick serif style built from paths -->
+    <polygon points="108,138 130,68 144,68 122,138" class="letter-a"/>
+    <polygon points="144,68 158,68 180,138 166,138" class="letter-a"/>
+    <!-- crossbar -->
+    <rect x="116" y="108" width="36" height="8" rx="1" class="ring-fill"/>
+    <!-- Thin serifs at base -->
+    <rect x="103" y="134" width="22" height="5" rx="1" class="letter-a"/>
+    <rect x="163" y="134" width="22" height="5" rx="1" class="letter-a"/>
+
+    <!-- The V — overlapping, right side, lighter -->
+    <polygon points="148,68 162,68 178,130 165,130" class="letter-v" opacity="0.9"/>
+    <polygon points="178,130 190,68 204,68 182,138" class="letter-v" opacity="0.9"/>
+
+    <!-- Crown at top -->
+    <polygon points="120,35 130,25 144,32 158,25 168,35 160,38 144,30 128,38" class="ring-fill"/>
+  </g>
+</svg>

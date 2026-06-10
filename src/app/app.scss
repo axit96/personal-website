@@ -25,16 +25,14 @@
   50% { background-position: 100% 50%; }
 }
 
-.brand-link {
-  color: var(--text);
-  text-decoration: none;
-  font-size: 1.375rem;
-  font-weight: 800;
-  letter-spacing: 0.2px;
+.brand {
+  display: flex;
+  align-items: center;
 }
 
-.brand-link:hover {
-  color: var(--accent);
+.brand-logo {
+  height: 40px;
+  width: auto;
 }
 
 .nav {
