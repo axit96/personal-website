@@ -15,8 +15,9 @@ describe('App', () => {
     expect(component).toBeTruthy();
 
     const compiled = fixture.nativeElement as HTMLElement;
-    const brandLink = compiled.querySelector('.brand-link');
-    expect(brandLink?.textContent).toContain('Personal Profile');
+    const brandLogo = compiled.querySelector('.brand-logo') as HTMLImageElement;
+    expect(brandLogo).toBeTruthy();
+    expect(brandLogo.src).toContain('akshit_vaishnav_logos_v3_unique.svg');
 
     const buttons = compiled.querySelectorAll('.nav-btn');
     expect(buttons.length).toBe(3);

@@ -231,11 +231,24 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   onSubmit(): void {
     if (this.contactForm.invalid) {
-      this.contactForm.markAllAsTouched(); // shows all errors on submit
+      this.contactForm.markAllAsTouched();
       return;
     }
+
+    const { firstName, lastName, contactNumber, emailId, city, state, query } = this.contactForm.value;
+    const subject = `Portfolio Inquiry from ${firstName} ${lastName}`;
+    const body = [
+      `Name: ${firstName} ${lastName}`,
+      `Email: ${emailId}`,
+      `Phone: ${contactNumber || 'N/A'}`,
+      `Location: ${city || 'N/A'}, ${state || 'N/A'}`,
+      ``,
+      `Message:`,
+      `${query || 'N/A'}`,
+    ].join('\n');
+
     console.log('Form Data:', this.contactForm.value);
+    window.location.href = `mailto:akshitvaishnav96@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     this.contactForm.reset();
-    // hook up EmailJS or API call here
   }
 }
