@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -12,15 +13,25 @@ interface Project {
   highlights: string[];
 }
 
+interface Certificate {
+  title: string;
+  issuer: string;
+  icon: string;
+  color: string;
+  date: Date;
+  filename: string;
+}
+
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, DatePipe],
 })
 export class ProfilePage implements OnInit, OnDestroy {
   protected scrollIndicator = true;
   protected selectedProject: Project | null = null;
+  protected selectedCertificate: Certificate | null = null;
 
   constructor(private readonly fb: FormBuilder) {}
 
@@ -34,10 +45,22 @@ export class ProfilePage implements OnInit, OnDestroy {
     document.body.style.overflow = '';
   }
 
+  protected openCertificate(cert: Certificate): void {
+    this.selectedCertificate = cert;
+    document.body.style.overflow = 'hidden';
+  }
+
+  protected closeCertificate(): void {
+    this.selectedCertificate = null;
+    document.body.style.overflow = '';
+  }
+
   @HostListener('document:keydown.Escape')
   protected onEscape(): void {
     if (this.selectedProject) {
       this.closeProject();
+    } else if (this.selectedCertificate) {
+      this.closeCertificate();
     }
   }
 
@@ -49,7 +72,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   readonly name = 'Akshit Vaishnav';
-  readonly headline = 'Digital Specialist Engineer (Software Engineer 2) | Java FullStack | AI/ML/Gen-AI Enthusiast';
+  readonly headline = 'Digital Specialist Engineer | Java Full Stack & Angular | AI/ML Enthusiast';
 
   get yearsOfExperience(): string {
     const start = new Date('2021-10-18');
@@ -159,6 +182,73 @@ export class ProfilePage implements OnInit, OnDestroy {
         'Published results showing LSTM outperformed traditional ML by 25%',
         'Implemented automated data pipeline for real-time forecasting',
       ],
+    },
+  ];
+
+  readonly certificates: Certificate[] = [
+    {
+      title: 'GitHub Copilot Fundamentals',
+      issuer: 'Microsoft',
+      icon: '💻',
+      color: '#6C5CE7',
+      date: new Date('2026-05-27'),
+      filename: '27_may_2026.pdf',
+    },
+    {
+      title: 'Introduction to LangChain',
+      issuer: 'Infosys',
+      icon: '🔗',
+      color: '#00B894',
+      date: new Date('2026-05-04'),
+      filename: '4_may_2026.pdf',
+    },
+    {
+      title: 'AWS Transform — Mainframe Advanced',
+      issuer: 'Amazon Web Services',
+      icon: '🖥️',
+      color: '#FF7675',
+      date: new Date('2026-04-09'),
+      filename: '9_april_2026.pdf',
+    },
+    {
+      title: 'Insta Award — Infosys 2026',
+      issuer: 'Infosys',
+      icon: '🏆',
+      color: '#FDCB6E',
+      date: new Date('2026-04-01'),
+      filename: 'Aprl_2026.pdf',
+    },
+    {
+      title: 'API Technology Ecosystem',
+      issuer: 'Infosys',
+      icon: '🌐',
+      color: '#74B9FF',
+      date: new Date('2026-01-01'),
+      filename: '1_jan_2026.pdf',
+    },
+    {
+      title: 'Infosys L2 — Java Programmer',
+      issuer: 'Infosys',
+      icon: '☕',
+      color: '#E17055',
+      date: new Date('2025-09-19'),
+      filename: '19_sept_2025.pdf',
+    },
+    {
+      title: 'AWS Blu Age — Level 2',
+      issuer: 'Amazon Web Services',
+      icon: '☁️',
+      color: '#A29BFE',
+      date: new Date('2025-09-04'),
+      filename: '4_sept_2025.pdf',
+    },
+    {
+      title: 'Gen AI — Professional Foundation',
+      issuer: 'Infosys',
+      icon: '🤖',
+      color: '#55EFC4',
+      date: new Date('2025-06-17'),
+      filename: '17_june_2025.pdf',
     },
   ];
 

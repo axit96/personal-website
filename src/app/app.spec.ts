@@ -20,10 +20,11 @@ describe('App', () => {
     expect(brandLogo.src).toContain('akshit_vaishnav_logos_v3_unique.svg');
 
     const buttons = compiled.querySelectorAll('.nav-btn');
-    expect(buttons.length).toBe(3);
+    expect(buttons.length).toBe(4);
     expect(buttons[0].textContent).toContain('Experience');
     expect(buttons[1].textContent).toContain('Skills');
-    expect(buttons[2].textContent).toContain('Contact Me');
+    expect(buttons[2].textContent).toContain('Certificates');
+    expect(buttons[3].textContent).toContain('Contact Me');
 
     fixture.destroy();
   });

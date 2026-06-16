@@ -1,0 +1,7 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    ".opencode/skills/angular-architecture/SKILL.md",
+    ".opencode/skills/code-coverage/SKILL.md"
+  ]
+}

@@ -80,6 +80,100 @@ describe('ProfilePage', () => {
     });
   });
 
+  describe('certificates', () => {
+    it('should have 8 certificates', async () => {
+      const { component } = await setup();
+      expect((component as any).certificates.length).toBe(8);
+    });
+
+    it('should be sorted latest first', async () => {
+      const { component } = await setup();
+      const certs = (component as any).certificates as any[];
+      for (let i = 1; i < certs.length; i++) {
+        expect(certs[i - 1].date.getTime()).toBeGreaterThanOrEqual(certs[i].date.getTime());
+      }
+    });
+
+    it('should open certificate and lock body scroll', async () => {
+      const { component } = await setup();
+      const cert = (component as any).certificates[0];
+      (component as any).openCertificate(cert);
+      expect((component as any).selectedCertificate).toBe(cert);
+      expect(document.body.style.overflow).toBe('hidden');
+    });
+
+    it('should close certificate and restore body scroll', async () => {
+      const { component } = await setup();
+      const cert = (component as any).certificates[0];
+      (component as any).openCertificate(cert);
+      (component as any).closeCertificate();
+      expect((component as any).selectedCertificate).toBeNull();
+      expect(document.body.style.overflow).toBe('');
+    });
+
+    it('should close certificate on Escape when certificate modal is open', async () => {
+      const { component } = await setup();
+      const cert = (component as any).certificates[0];
+      (component as any).openCertificate(cert);
+      (component as any).onEscape();
+      expect((component as any).selectedCertificate).toBeNull();
+    });
+
+    it('should not close on Escape when no certificate is selected', async () => {
+      const { component } = await setup();
+      (component as any).onEscape();
+      expect((component as any).selectedCertificate).toBeNull();
+    });
+
+    it('should not interfere with project modal on Escape', async () => {
+      const { component } = await setup();
+      const cert = (component as any).certificates[0];
+      const project = (component as any).projects[0];
+      (component as any).openProject(project);
+      (component as any).selectedCertificate = cert;
+      (component as any).onEscape();
+      expect((component as any).selectedProject).toBeNull();
+      expect((component as any).selectedCertificate).toBe(cert);
+    });
+
+    it('should render certificate cards in template', async () => {
+      const { fixture, component } = await templateSetup();
+      fixture.detectChanges();
+      const el = fixture.nativeElement as HTMLElement;
+      const certCards = el.querySelectorAll('.cert-card');
+      expect(certCards.length).toBe((component as any).certificates.length);
+    });
+
+    it('should display certificate modal when selectedCertificate is set', async () => {
+      const { fixture, component } = await templateSetup();
+      (component as any).selectedCertificate = (component as any).certificates[0];
+      fixture.detectChanges();
+      const el = fixture.nativeElement as HTMLElement;
+      const overlay = el.querySelector('.modal-overlay');
+      expect(overlay).toBeTruthy();
+      const title = el.querySelector('.modal-title');
+      expect(title?.textContent).toContain('GitHub Copilot');
+    });
+
+    it('should render certificate image in modal', async () => {
+      const { fixture, component } = await templateSetup();
+      (component as any).selectedCertificate = (component as any).certificates[0];
+      fixture.detectChanges();
+      const el = fixture.nativeElement as HTMLElement;
+      const img = el.querySelector('.cert-img');
+      expect(img).toBeTruthy();
+      expect(img?.getAttribute('alt')).toContain('GitHub Copilot');
+    });
+
+    it('should hide certificate modal when selectedCertificate is null', async () => {
+      const { fixture, component } = await templateSetup();
+      fixture.detectChanges();
+      const el = fixture.nativeElement as HTMLElement;
+      const overlay = el.querySelectorAll('.modal-overlay');
+      expect(overlay.length).toBe(0);
+    });
+  });
+
   describe('ngOnInit', () => {
     it('should hide scroll indicator if page is already scrolled', async () => {
       const originalScrollY = window.scrollY;

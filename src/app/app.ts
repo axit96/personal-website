@@ -15,6 +15,7 @@ export class App {
   protected readonly navItems = [
     { label: 'Experience', id: 'experienceSection' },
     { label: 'Skills', id: 'skillsSection' },
-    { label: 'Contact Me', id: 'contactFormSection' },
+    { label: 'Certificates', id: 'certificatesSection' },
+    { label: 'Contact Me', id: 'contactFormSection' }
   ];
 }
