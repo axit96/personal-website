@@ -14,8 +14,30 @@
   justify-content: space-between;
   gap: 16px;
   padding: 14px 18px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
+  border-bottom: 1px solid rgba(37, 99, 235, 0.08);
+  background: linear-gradient(
+    90deg,
+    #e8f0fe,
+    #dbeafe,
+    #e0e7ff,
+    #ede9fe,
+    #e8f0fe
+  );
+  background-size: 300% 100%;
+  animation: headerBg 8s ease-in-out infinite;
+}
+
+@keyframes headerBg {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header {
+    animation: none;
+    background: #e8f0fe;
+  }
 }
 
 .brand {
