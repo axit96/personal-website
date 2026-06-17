@@ -37,21 +37,29 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   protected openProject(project: Project): void {
     this.selectedProject = project;
-    document.body.style.overflow = 'hidden';
+    this.lockScroll();
   }
 
   protected closeProject(): void {
     this.selectedProject = null;
-    document.body.style.overflow = '';
+    this.unlockScroll();
   }
 
   protected openCertificate(cert: Certificate): void {
     this.selectedCertificate = cert;
-    document.body.style.overflow = 'hidden';
+    this.lockScroll();
   }
 
   protected closeCertificate(): void {
     this.selectedCertificate = null;
+    this.unlockScroll();
+  }
+
+  private lockScroll(): void {
+    document.body.style.overflow = 'hidden';
+  }
+
+  private unlockScroll(): void {
     document.body.style.overflow = '';
   }
 
@@ -290,7 +298,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    document.body.style.overflow = '';
+    this.unlockScroll();
   }
 
   onMouseMove(e: MouseEvent) {

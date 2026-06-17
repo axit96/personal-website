@@ -276,13 +276,6 @@
   line-height: 1.6;
 }
 
-.cta-row {
-  margin-top: 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
 /* ── grid / experience section ────────────────────────────────────────────── */
 
 .grid {
@@ -355,7 +348,6 @@
 .project:hover   { background: var(--surface-2); }
 .project-title   { font-weight: 650; }
 .project-desc    { color: var(--muted); margin-top: 6px; }
-.project-link    { margin-top: 10px; color: var(--accent); font-size: 13px; }
 
 .pill {
   font-size: 13px;
@@ -908,7 +900,6 @@
 
 .social-github .social-icon    { color: #181717; }
 .social-linkedin .social-icon  { color: #0A66C2; }
-.social-twitter .social-icon   { color: #000; }
 
 .social-url {
   font-size: 12px;
