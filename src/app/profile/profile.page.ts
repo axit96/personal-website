@@ -187,12 +187,12 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   readonly certificates: Certificate[] = [
     {
-      title: 'GitHub Copilot Fundamentals',
+      title: 'GitHub Copilot GH-300',
       issuer: 'Microsoft',
       icon: '💻',
       color: '#6C5CE7',
-      date: new Date('2026-05-27'),
-      filename: '27_may_2026.pdf',
+      date: new Date('2026-06-12'),
+      filename: '12_june_2026.pdf',
     },
     {
       title: 'Introduction to LangChain',
