@@ -149,5 +149,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     console.log('Form Data:', this.contactForm.value);
     globalThis.location.href = `mailto:akshitvaishnav96@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     this.contactForm.reset();
+    console.log('test');
   }
 }
