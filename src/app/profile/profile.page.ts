@@ -292,7 +292,7 @@ export class ProfilePage implements OnInit, OnDestroy {
       state:         ['', ],
       query:         ['', [Validators.minLength(10)]]
     });
-    if (window.scrollY > 0) {
+    if (globalThis.scrollY > 0) {
       this.scrollIndicator = false;
     }
   }
@@ -346,7 +346,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     ].join('\n');
 
     console.log('Form Data:', this.contactForm.value);
-    window.location.href = `mailto:akshitvaishnav96@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    globalThis.location.href = `mailto:akshitvaishnav96@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     this.contactForm.reset();
   }
 }
