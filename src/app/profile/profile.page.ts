@@ -35,23 +35,23 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   constructor(private readonly fb: FormBuilder) {}
 
-  protected openProject(project: Project): void {
-    this.selectedProject = project;
+  protected open(type: 'project', item: Project): void;
+  protected open(type: 'certificate', item: Certificate): void;
+  protected open(type: 'project' | 'certificate', item: Project | Certificate): void {
+    if (type === 'project') {
+      this.selectedProject = item as Project;
+    } else {
+      this.selectedCertificate = item as Certificate;
+    }
     this.lockScroll();
   }
 
-  protected closeProject(): void {
-    this.selectedProject = null;
-    this.unlockScroll();
-  }
-
-  protected openCertificate(cert: Certificate): void {
-    this.selectedCertificate = cert;
-    this.lockScroll();
-  }
-
-  protected closeCertificate(): void {
-    this.selectedCertificate = null;
+  protected close(type: 'project' | 'certificate'): void {
+    if (type === 'project') {
+      this.selectedProject = null;
+    } else {
+      this.selectedCertificate = null;
+    }
     this.unlockScroll();
   }
 
@@ -66,9 +66,9 @@ export class ProfilePage implements OnInit, OnDestroy {
   @HostListener('document:keydown.Escape')
   protected onEscape(): void {
     if (this.selectedProject) {
-      this.closeProject();
+      this.close('project');
     } else if (this.selectedCertificate) {
-      this.closeCertificate();
+      this.close('certificate');
     }
   }
 

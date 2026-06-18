@@ -51,7 +51,7 @@ describe('ProfilePage', () => {
     it('should open project and lock body scroll', async () => {
       const { component } = await setup();
       const project = (component as any).projects[0];
-      (component as any).openProject(project);
+      (component as any).open('project', project);
       expect((component as any).selectedProject).toBe(project);
       expect(document.body.style.overflow).toBe('hidden');
     });
@@ -59,8 +59,8 @@ describe('ProfilePage', () => {
     it('should close project and restore body scroll', async () => {
       const { component } = await setup();
       const project = (component as any).projects[0];
-      (component as any).openProject(project);
-      (component as any).closeProject();
+      (component as any).open('project', project);
+      (component as any).close('project');
       expect((component as any).selectedProject).toBeNull();
       expect(document.body.style.overflow).toBe('');
     });
@@ -68,7 +68,7 @@ describe('ProfilePage', () => {
     it('should close project on Escape when a project is selected', async () => {
       const { component } = await setup();
       const project = (component as any).projects[0];
-      (component as any).openProject(project);
+      (component as any).open('project', project);
       (component as any).onEscape();
       expect((component as any).selectedProject).toBeNull();
     });
@@ -97,7 +97,7 @@ describe('ProfilePage', () => {
     it('should open certificate and lock body scroll', async () => {
       const { component } = await setup();
       const cert = (component as any).certificates[0];
-      (component as any).openCertificate(cert);
+      (component as any).open('certificate', cert);
       expect((component as any).selectedCertificate).toBe(cert);
       expect(document.body.style.overflow).toBe('hidden');
     });
@@ -105,8 +105,8 @@ describe('ProfilePage', () => {
     it('should close certificate and restore body scroll', async () => {
       const { component } = await setup();
       const cert = (component as any).certificates[0];
-      (component as any).openCertificate(cert);
-      (component as any).closeCertificate();
+      (component as any).open('certificate', cert);
+      (component as any).close('certificate');
       expect((component as any).selectedCertificate).toBeNull();
       expect(document.body.style.overflow).toBe('');
     });
@@ -114,7 +114,7 @@ describe('ProfilePage', () => {
     it('should close certificate on Escape when certificate modal is open', async () => {
       const { component } = await setup();
       const cert = (component as any).certificates[0];
-      (component as any).openCertificate(cert);
+      (component as any).open('certificate', cert);
       (component as any).onEscape();
       expect((component as any).selectedCertificate).toBeNull();
     });
@@ -129,7 +129,7 @@ describe('ProfilePage', () => {
       const { component } = await setup();
       const cert = (component as any).certificates[0];
       const project = (component as any).projects[0];
-      (component as any).openProject(project);
+      (component as any).open('project', project);
       (component as any).selectedCertificate = cert;
       (component as any).onEscape();
       expect((component as any).selectedProject).toBeNull();

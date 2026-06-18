@@ -36,7 +36,7 @@
     <h2>Projects</h2>
     <div class="projects">
       @for (p of projects; track $index) {
-      <button class="project tilt" (click)="openProject(p)">
+      <button class="project tilt" (click)="open('project', p)">
         <div class="project-title">{{ p.title }}</div>
         <div class="project-desc">{{ p.description }}</div>
       </button>
@@ -92,7 +92,7 @@
   </div>
   <div class="cert-grid">
     @for (cert of certificates; track cert.filename) {
-      <button class="cert-card tilt" (click)="openCertificate(cert)">
+      <button class="cert-card tilt" (click)="open('certificate', cert)">
         <div class="cert-badge" [style.background]="cert.color + '20'" [style.border-color]="cert.color + '50'">{{ cert.icon }}</div>
         <div class="cert-card-title">{{ cert.title }}</div>
         <div class="cert-card-issuer">{{ cert.issuer }}</div>
@@ -220,9 +220,9 @@
 </section>
 
 @if (selectedCertificate) {
-<div class="modal-overlay" (click)="closeCertificate()" (keydown.Enter)="closeCertificate()" (keydown.Space)="closeCertificate()">
+<div class="modal-overlay" (click)="close('certificate')" (keydown.Enter)="close('certificate')" (keydown.Space)="close('certificate')">
   <div class="modal-card cert-modal-card" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
-    <button class="modal-close" (click)="closeCertificate()" aria-label="Close">
+    <button class="modal-close" (click)="close('certificate')" aria-label="Close">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
         <line x1="18" y1="6" x2="6" y2="18"/>
         <line x1="6" y1="6" x2="18" y2="18"/>
@@ -255,9 +255,9 @@
 }
 
 @if (selectedProject) {
-<div class="modal-overlay" (click)="closeProject()" (keydown.Enter)="closeProject()" (keydown.Space)="closeProject()">
+<div class="modal-overlay" (click)="close('project')" (keydown.Enter)="close('project')" (keydown.Space)="close('project')">
   <div class="modal-card" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
-    <button class="modal-close" (click)="closeProject()" aria-label="Close">
+    <button class="modal-close" (click)="close('project')" aria-label="Close">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
         <line x1="18" y1="6" x2="6" y2="18"/>
         <line x1="6" y1="6" x2="18" y2="18"/>
