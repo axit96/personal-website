@@ -11,6 +11,7 @@ export interface Project {
 
 export interface Certificate {
   title: string;
+  slug: string;
   issuer: string;
   icon: string;
   color: string;
@@ -47,11 +48,11 @@ export const skillCategories = [
 
 export const experience = [
   {
-    title: 'Digital Specialist Engineer (Full Stack Java + Angular + DB)',
+    title: 'Fullstack Software Engineer',
     company: 'Infosys Limited',
     startYear: 'Oct 2021',
     endYear: 'Present',
-    description: 'Full Stack Java + Angular + DB development across multiple enterprise projects including mainframe modernization, data localization, and lending services.',
+    description: 'Full stack software development across multiple enterprise-scale projects — designing APIs, building frontend interfaces, optimizing databases, and modernizing legacy systems for performance and maintainability.',
   },
 ];
 
@@ -120,68 +121,76 @@ export const projects: Project[] = [
 
 export const certificates: Certificate[] = [
   {
+    title: 'Deploy Agent with ADK',
+    slug: 'deploy-agent-with-adk',
+    issuer: 'Google',
+    icon: '⚡',
+    color: '#4285F4',
+    date: new Date('2026-06-20'),
+    filename: 'deploy-agent-with-adk.pdf',
+  },
+  {
     title: 'GitHub Copilot GH-300',
+    slug: 'github-copilot-gh-300',
     issuer: 'Microsoft',
     icon: '💻',
     color: '#6C5CE7',
     date: new Date('2026-06-12'),
-    filename: '12_june_2026.pdf',
-  },
-  {
-    title: 'Introduction to LangChain',
-    issuer: 'Infosys',
-    icon: '🔗',
-    color: '#00B894',
-    date: new Date('2026-05-04'),
-    filename: '4_may_2026.pdf',
+    filename: 'github-copilot-gh-300.pdf',
   },
   {
     title: 'AWS Transform — Mainframe Advanced',
+    slug: 'aws-transform-mainframe-advanced',
     issuer: 'Amazon Web Services',
     icon: '🖥️',
     color: '#FF7675',
     date: new Date('2026-04-09'),
-    filename: '9_april_2026.pdf',
+    filename: 'aws-transform-mainframe-advanced.pdf',
   },
   {
     title: 'Insta Award — Infosys 2026',
+    slug: 'insta-award-infosys-2026',
     issuer: 'Infosys',
     icon: '🏆',
     color: '#FDCB6E',
     date: new Date('2026-04-01'),
-    filename: 'Aprl_2026.pdf',
+    filename: 'insta-award-infosys-2026.pdf',
   },
   {
     title: 'API Technology Ecosystem',
+    slug: 'api-technology-ecosystem',
     issuer: 'Infosys',
     icon: '🌐',
     color: '#74B9FF',
     date: new Date('2026-01-01'),
-    filename: '1_jan_2026.pdf',
+    filename: 'api-technology-ecosystem.pdf',
   },
   {
     title: 'Infosys L2 — Java Programmer',
+    slug: 'infosys-l2-java-programmer',
     issuer: 'Infosys',
     icon: '☕',
     color: '#E17055',
     date: new Date('2025-09-19'),
-    filename: '19_sept_2025.pdf',
+    filename: 'infosys-l2-java-programmer.pdf',
   },
   {
     title: 'AWS Blu Age — Level 2',
+    slug: 'aws-blu-age-level-2',
     issuer: 'Amazon Web Services',
     icon: '☁️',
     color: '#A29BFE',
     date: new Date('2025-09-04'),
-    filename: '4_sept_2025.pdf',
+    filename: 'aws-blu-age-level-2.pdf',
   },
   {
     title: 'Gen AI — Professional Foundation',
+    slug: 'gen-ai-professional-foundation',
     issuer: 'Infosys',
-    icon: '🤖',
+    icon: '🧠',
     color: '#55EFC4',
     date: new Date('2025-06-17'),
-    filename: '17_june_2025.pdf',
+    filename: 'gen-ai-professional-foundation.pdf',
   },
 ];
 

@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import type { Project, Certificate } from './profile.data';
 import { skillCategories, experience, projects, certificates, education, contact } from './profile.data';
 
@@ -15,7 +16,10 @@ export class ProfilePage implements OnInit, OnDestroy {
   protected selectedProject: Project | null = null;
   protected selectedCertificate: Certificate | null = null;
 
-  constructor(private readonly fb: FormBuilder) {}
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly route: ActivatedRoute,
+  ) {}
 
   protected open(type: 'project', item: Project): void;
   protected open(type: 'certificate', item: Certificate): void;
@@ -23,7 +27,11 @@ export class ProfilePage implements OnInit, OnDestroy {
     if (type === 'project') {
       this.selectedProject = item as Project;
     } else {
-      this.selectedCertificate = item as Certificate;
+      const cert = item as Certificate;
+      this.selectedCertificate = cert;
+      const url = new URL(globalThis.location.href);
+      url.searchParams.set('cert', cert.slug);
+      globalThis.history.replaceState(null, '', url.toString());
     }
     this.lockScroll();
   }
@@ -33,6 +41,9 @@ export class ProfilePage implements OnInit, OnDestroy {
       this.selectedProject = null;
     } else {
       this.selectedCertificate = null;
+      const url = new URL(globalThis.location.href);
+      url.searchParams.delete('cert');
+      globalThis.history.replaceState(null, '', url.toString());
     }
     this.unlockScroll();
   }
@@ -62,7 +73,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   readonly name = 'Akshit Vaishnav';
-  readonly headline = 'Digital Specialist Engineer | Java Full Stack & Angular | AI/ML Enthusiast';
+  readonly headline = 'Full Stack Software Engineer | Distributed Systems & Problem Solving | AI/ML';
 
   get yearsOfExperience(): string {
     const start = new Date('2021-10-18');
@@ -72,7 +83,11 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   get summary(): string {
-    return `Full Stack Java Engineer with ${this.yearsOfExperience}+ years of experience at Infosys, specializing in Core Java, Spring Boot API development, Angular UI integration, and enterprise microservices including Kafka framework.`;
+    return `Software Engineer with ${this.yearsOfExperience}+ years of experience designing and building scalable, resilient systems. Passionate about solving complex problems through clean architecture, data-driven decisions, and continuous learning across the full engineering stack.`;
+  }
+
+  get extraSummary(): string {
+    return `Actively researching and applying Generative AI to improve productivity and build smarter solutions. Committed to continuous learning — holding industry-level certifications from Google, Microsoft, and AWS.`;
   }
 
   readonly skillCategories = skillCategories;
@@ -81,6 +96,8 @@ export class ProfilePage implements OnInit, OnDestroy {
   readonly certificates = certificates;
   readonly education = education;
   readonly contact = contact;
+  readonly infosysProjects = projects.slice(0, 3);
+  readonly mtTechProject = projects[3];
   contactForm!: FormGroup;
 
   ngOnInit(): void {
@@ -95,6 +112,14 @@ export class ProfilePage implements OnInit, OnDestroy {
     });
     if (globalThis.scrollY > 0) {
       this.scrollIndicator = false;
+    }
+    const certSlug = this.route.snapshot.queryParamMap.get('cert');
+    if (certSlug) {
+      const cert = certificates.find(c => c.slug === certSlug);
+      if (cert) {
+        this.selectedCertificate = cert;
+        this.lockScroll();
+      }
     }
   }
 
