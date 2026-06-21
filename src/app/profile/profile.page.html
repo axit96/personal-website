@@ -9,6 +9,7 @@
     <h1 class="title slide-right">{{ name }}</h1>
     <p class="headline appear-from-left">{{ headline }}</p>
     <p class="summary appear-from-left">{{ summary }}</p>
+    <p class="summary appear-from-left" style="margin-top: 16px;">{{ extraSummary }}</p>
 
   </div>
 
@@ -20,22 +21,16 @@
 
 <section class="grid" id="experienceSection">
   <div class="card tilt reveal is-visible" style="--d: 280ms">
-    <h2>Experience</h2>
+    <h2>Infosys</h2>
     <ul class="timeline">
-      @for (exp of experience; track exp.title) {
       <li>
-        <div class="tl-title">{{ exp.title }} — {{ exp.company }}</div>
-        <div class="tl-meta">{{ exp.startYear }} — {{ exp.endYear }}</div>
-        <div class="tl-desc">{{ exp.description }}</div>
+        <div class="tl-title">{{ experience[0].title }} — {{ experience[0].company }}</div>
+        <div class="tl-meta">{{ experience[0].startYear }} — {{ experience[0].endYear }}</div>
+        <div class="tl-desc">{{ experience[0].description }}</div>
       </li>
-      }
     </ul>
-  </div>
-
-  <div class="card tilt reveal is-visible" style="--d: 520ms">
-    <h2>Projects</h2>
     <div class="projects">
-      @for (p of projects; track $index) {
+      @for (p of infosysProjects; track $index) {
       <button class="project tilt" (click)="open('project', p)">
         <div class="project-title">{{ p.title }}</div>
         <div class="project-desc">{{ p.description }}</div>
@@ -47,13 +42,24 @@
   <div class="card tilt reveal is-visible" style="--d: 760ms">
     <h2>Education</h2>
     <ul class="timeline">
-      @for (edu of education; track edu.degree) {
       <li>
-        <div class="tl-title">{{ edu.degree }}</div>
-        <div class="tl-meta">{{ edu.school }} • {{ edu.year }}</div>
-        <div class="tl-desc">{{ edu.field }}</div>
+        <div class="tl-title">{{ education[0].degree }}</div>
+        <div class="tl-meta">{{ education[0].school }} • {{ education[0].year }}</div>
+        <div class="tl-desc">{{ education[0].field }}</div>
       </li>
-      }
+    </ul>
+    <div class="projects education-projects">
+      <button class="project tilt" (click)="open('project', mtTechProject)">
+        <div class="project-title">{{ mtTechProject.title }}</div>
+        <div class="project-desc">{{ mtTechProject.description }}</div>
+      </button>
+    </div>
+    <ul class="timeline">
+      <li>
+        <div class="tl-title">{{ education[1].degree }}</div>
+        <div class="tl-meta">{{ education[1].school }} • {{ education[1].year }}</div>
+        <div class="tl-desc">{{ education[1].field }}</div>
+      </li>
     </ul>
   </div>
 </section>
@@ -268,7 +274,6 @@
       <h2 class="modal-title">{{ selectedProject.title }}</h2>
       <div class="modal-meta">
         <span class="modal-role">{{ selectedProject.role }}</span>
-        <span class="modal-duration">{{ selectedProject.duration }}</span>
       </div>
     </div>
 

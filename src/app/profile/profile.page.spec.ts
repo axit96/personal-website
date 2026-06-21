@@ -152,7 +152,7 @@ describe('ProfilePage', () => {
       const overlay = el.querySelector('.modal-overlay');
       expect(overlay).toBeTruthy();
       const title = el.querySelector('.modal-title');
-      expect(title?.textContent).toContain('GitHub Copilot');
+      expect(title?.textContent).toContain('Deploy Agent with ADK');
     });
 
     it('should render certificate image in modal', async () => {
@@ -162,7 +162,7 @@ describe('ProfilePage', () => {
       const el = fixture.nativeElement as HTMLElement;
       const img = el.querySelector('.cert-img');
       expect(img).toBeTruthy();
-      expect(img?.getAttribute('alt')).toContain('GitHub Copilot');
+      expect(img?.getAttribute('alt')).toContain('Deploy Agent with ADK');
     });
 
     it('should hide certificate modal when selectedCertificate is null', async () => {
@@ -261,9 +261,9 @@ describe('ProfilePage', () => {
   });
 
   describe('summary', () => {
-    it('should include company name', async () => {
+    it('should include experience duration', async () => {
       const { component } = await setup();
-      expect(component.summary).toContain('Infosys');
+      expect(component.summary).toMatch(/years of experience/);
     });
   });
 
