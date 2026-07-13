@@ -8,5 +8,11 @@ export const routes: Routes = [
       import('./profile/profile.page').then((m) => m.ProfilePage),
     title: 'Profile',
   },
+  {
+    path: 'stockanalysis',
+    loadComponent: () =>
+      import('./stock-analysis/stock-analysis.page').then((m) => m.StockAnalysisPage),
+    title: 'Stock Analysis',
+  },
   { path: '**', redirectTo: 'profile' },
 ];
