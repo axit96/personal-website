@@ -1,0 +1,27 @@
+<section class="stock-analysis">
+  <h1>Stock Analysis</h1>
+
+  <div class="api-section">
+    <h2>Chat Completion</h2>
+    <div class="input-row">
+      <label for="messageInput">Message:</label>
+      <input id="messageInput" type="text" [(ngModel)]="message" placeholder="Enter your message" />
+      <button class="btn" (click)="loadChat()" [disabled]="chatLoading">
+        {{ chatLoading ? 'Loading...' : 'Send' }}
+      </button>
+    </div>
+    @if (chatError) {
+      <pre class="json-output error">{{ chatError }}</pre>
+    } @else if (chatContent) {
+      <pre class="json-output">{{ chatContent }}</pre>
+    }
+  </div>
+
+  <div class="api-section">
+    <h2>Stock Data (TCS.NS)</h2>
+    <button class="btn" (click)="loadStock()" [disabled]="stockLoading">
+      {{ stockLoading ? 'Loading...' : 'Refresh' }}
+    </button>
+    <pre class="json-output">{{ stockResult | json }}</pre>
+  </div>
+</section>
